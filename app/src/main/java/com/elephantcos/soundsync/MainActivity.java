@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -13,14 +12,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.elephantcos.soundsync.fragment.DevicesFragment;
 import com.elephantcos.soundsync.fragment.StreamFragment;
 import com.elephantcos.soundsync.fragment.FilesFragment;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERM_CODE = 101;
-    private String  groupOwnerAddress = "";
-    private boolean groupOwner        = false;
+    private Socket activeSocket;
+    private String peerIp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,39 +56,33 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> denied = new ArrayList<>();
         for (String p : perms)
-            if (ActivityCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED)
+            if (ActivityCompat.checkSelfPermission(this, p)
+                    != PackageManager.PERMISSION_GRANTED)
                 denied.add(p);
-
         if (!denied.isEmpty())
-            ActivityCompat.requestPermissions(this, denied.toArray(new String[0]), PERM_CODE);
+            ActivityCompat.requestPermissions(this,
+                denied.toArray(new String[0]), PERM_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int code,
             @NonNull String[] perms, @NonNull int[] results) {
         super.onRequestPermissionsResult(code, perms, results);
-        if (code == PERM_CODE) {
-            for (int i = 0; i < results.length; i++) {
-                if (results[i] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,
-                        perms[i].substring(perms[i].lastIndexOf('.')+1) +
-                        " permission ছাড়া কিছু feature কাজ করবে না।",
-                        Toast.LENGTH_LONG).show();
-                }
-            }
-        }
     }
+
+    public void onConnected(String ip, Socket socket) {
+        this.peerIp       = ip;
+        this.activeSocket = socket;
+    }
+
+    public void onConnected(String address, boolean isOwner) { this.peerIp = address; }
+    public Socket  getActiveSocket()       { return activeSocket; }
+    public String  getPeerIp()             { return peerIp; }
+    public String  getGroupOwnerAddress()  { return peerIp; }
+    public boolean isGroupOwner()          { return false; }
 
     private void loadFragment(Fragment f) {
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.fragment_container, f).commit();
     }
-
-    public void onConnected(String address, boolean isOwner) {
-        this.groupOwnerAddress = address;
-        this.groupOwner        = isOwner;
-    }
-
-    public String  getGroupOwnerAddress() { return groupOwnerAddress; }
-    public boolean isGroupOwner()         { return groupOwner; }
 }

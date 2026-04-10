@@ -6,47 +6,49 @@
     android:background="@color/bg_dark"
     android:padding="20dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nearby Devices"
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Connect Devices"
+        android:textColor="@color/white" android:textSize="26sp"
+        android:textStyle="bold" android:layout_marginBottom="8dp" />
+
+    <TextView android:id="@+id/my_info_text"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textColor="#6C63FF" android:textSize="12sp"
+        android:fontFamily="monospace"
+        android:background="#1A1A2E" android:padding="10dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView android:id="@+id/status_text"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Waiting..."
+        android:textColor="@color/text_secondary" android:textSize="14sp"
+        android:layout_marginBottom="20dp" />
+
+    <Button android:id="@+id/show_qr_btn"
+        android:layout_width="match_parent" android:layout_height="64dp"
+        android:text="Show My QR Code"
+        android:textSize="16sp" android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="4dp" />
+        android:background="@drawable/btn_primary"
+        android:layout_marginBottom="12dp" />
 
-    <TextView
-        android:id="@+id/status_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tap Scan to discover"
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp" />
+    <Button android:id="@+id/scan_qr_btn"
+        android:layout_width="match_parent" android:layout_height="64dp"
+        android:text="Scan Other Phone QR"
+        android:textSize="16sp" android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_secondary"
+        android:layout_marginBottom="12dp" />
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginBottom="10dp">
-        <Button android:id="@+id/scan_btn" android:layout_width="0dp" android:layout_height="52dp"
-            android:layout_weight="1" android:text="Scan" android:textColor="@color/white"
-            android:background="@drawable/btn_primary" android:layout_marginEnd="8dp" />
-        <Button android:id="@+id/disconnect_btn" android:layout_width="0dp" android:layout_height="52dp"
-            android:layout_weight="1" android:text="Disconnect" android:textColor="@color/white"
-            android:background="@drawable/btn_danger" />
-    </LinearLayout>
+    <Button android:id="@+id/disconnect_btn"
+        android:layout_width="match_parent" android:layout_height="52dp"
+        android:text="Disconnect"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_danger" />
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginBottom="16dp">
-        <Button android:id="@+id/show_qr_btn" android:layout_width="0dp" android:layout_height="52dp"
-            android:layout_weight="1" android:text="My QR Code" android:textColor="@color/white"
-            android:background="@drawable/btn_secondary" android:layout_marginEnd="8dp" />
-        <Button android:id="@+id/scan_qr_btn" android:layout_width="0dp" android:layout_height="52dp"
-            android:layout_weight="1" android:text="Scan QR" android:textColor="@color/white"
-            android:background="@drawable/btn_secondary" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/device_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="দুটো ফোন একই WiFi তে রাখুন। একটায় QR দেখাও, অন্যটায় Scan করো।"
+        android:textColor="#606080" android:textSize="13sp"
+        android:layout_marginTop="24dp" android:gravity="center" />
 </LinearLayout>
