@@ -20,16 +20,29 @@ public class WifiDirectManager {
         void onError(String message);
     }
 
-    private final WifiP2pManager manager;
+    public interface DeviceInfoCallback {
+        void onInfo(String deviceName, String deviceMac);
+    }
+
+    private final WifiP2pManager         manager;
     private final WifiP2pManager.Channel channel;
-    private final BroadcastReceiver receiver;
-    private final Listener listener;
+    private final BroadcastReceiver      receiver;
+    private final Listener               listener;
 
     public WifiDirectManager(Context ctx, Listener listener) {
         this.listener = listener;
         manager = (WifiP2pManager) ctx.getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(ctx, ctx.getMainLooper(), null);
         receiver = buildReceiver();
+    }
+
+    public void requestMyDeviceInfo(DeviceInfoCallback cb) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            manager.requestDeviceInfo(channel, device -> {
+                if (device != null && cb != null)
+                    cb.onInfo(device.deviceName, device.deviceAddress);
+            });
+        }
     }
 
     private BroadcastReceiver buildReceiver() {
@@ -46,11 +59,10 @@ public class WifiDirectManager {
                         NetworkInfo info = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
                         if (info != null && info.isConnected()) {
                             manager.requestConnectionInfo(channel, connInfo -> {
-                                if (connInfo.groupFormed) {
+                                if (connInfo.groupFormed)
                                     listener.onConnected(
                                         connInfo.groupOwnerAddress.getHostAddress(),
                                         connInfo.isGroupOwner);
-                                }
                             });
                         } else { listener.onDisconnected(); }
                         break;

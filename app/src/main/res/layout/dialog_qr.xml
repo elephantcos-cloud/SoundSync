@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="#1E1E2E"
+    android:padding="24dp" android:gravity="center">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="My QR Code" android:textColor="#FFFFFF"
+        android:textSize="20sp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+    <TextView android:id="@+id/qr_device_name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="Device Name"
+        android:textColor="#A0A0C0" android:textSize="14sp" android:layout_marginBottom="16dp" />
+    <ImageView android:id="@+id/qr_image" android:layout_width="220dp" android:layout_height="220dp"
+        android:padding="8dp" android:background="#FFFFFF" android:layout_marginBottom="12dp"
+        android:scaleType="fitCenter" />
+    <TextView android:id="@+id/qr_mac_text" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textColor="#6C63FF"
+        android:textSize="12sp" android:fontFamily="monospace" android:layout_marginBottom="20dp" />
+    <Button android:id="@+id/qr_close_btn" android:layout_width="match_parent"
+        android:layout_height="48dp" android:text="Close" android:textColor="#FFFFFF"
+        android:background="@drawable/btn_primary" />
+</LinearLayout>
